@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import {FormContext} from '../../providers/FormContext'
 import './Input.css';
-const Input = ({type, id, label, checkOnBlur}, ref) => { // ref is a 2nd arg to a component function 
+const Input = ({type, id, label, checkOnBlur, placeholder}, ref) => { // ref is a 2nd arg to a component function 
   
     const {formInput , setFormValues} = useContext(FormContext);
     const[isValid, setIsValid] = useState(true);
@@ -31,6 +31,7 @@ const Input = ({type, id, label, checkOnBlur}, ref) => { // ref is a 2nd arg to 
                 type={type} 
                 id={id}
                 value={text}
+                placeholder={(placeholder) ? placeholder : " "}
                 onBlur = {checkOnBlur}
                 onChange={(e)=> 
                     {
