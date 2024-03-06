@@ -2,7 +2,8 @@ import React, { useContext, useRef } from 'react';
 import '../form/Form.css'
 import Input from '../Input/Input';
 import { FormContext } from '../../providers/FormContext';
-
+import validateEmail from '../../helper/emailValidator';
+import validatePassword from '../../helper/passwordValidator'
 const Form = () => {
 
     const {formInput} = useContext(FormContext);
@@ -12,9 +13,22 @@ const Form = () => {
     const handleFormSubmit = (event) =>{
         event.preventDefault();
         // we have acces to formInput , that means validations occur here
-        console.log(formInput);
-        emailRef.current.focus(); // asssume form is not validated 
+        handleInvlidEmail();
+        handleInvlidPassword();
     } 
+
+    const handleInvlidEmail = () =>{
+        if(!validateEmail(formInput.email)){
+            emailRef.current.setInvalid();
+            emailRef.current.shake();
+        }
+    }   
+    const handleInvlidPassword = () =>{
+        if(!validatePassword(formInput.password)){
+            passwordRef.current.setInvalid();
+            passwordRef.current.shake();
+        }
+    }   
 
     return (
         <>
@@ -26,7 +40,8 @@ const Form = () => {
                         id="email-input"
                         type="text"
                         label = "email"
-                        inputRef = {emailRef}
+                        ref = {emailRef}
+                        checkOnBlur ={handleInvlidEmail}
                     />
                 </div>
 
@@ -36,7 +51,9 @@ const Form = () => {
                         id="password-input"
                         type="password"
                         label = "password"
-                        inputRef = {passwordRef}
+                        ref = {passwordRef}
+                        checkOnBlur ={ handleInvlidPassword}
+
                     />
                 </div>
 
